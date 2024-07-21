@@ -49,3 +49,15 @@ Vue可以进行模块化编程：一个页面由几个模板组成。
 
 13. 销毁完毕 :  destoryed
 
+
+
+## Vue路由
+1. npm install --save vue-router@3
+更新一下 vue-cli：npm update vue-cli
+（代码中，如果在一个模块化工程中使用它，必须要通过 Vue.use() 明确地安装路由功能）
+
+亲测：npm install vue-router运行时报错：
+Cannot read properties of undefined (reading 'install')
+不知道为啥...
+
+
