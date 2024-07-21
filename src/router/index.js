@@ -3,7 +3,7 @@ import Vue from "vue";
 import VueRouter from 'vue-router'
 import HelloWord from "../components/HelloWorld.vue";
 import Syntax from "../components/basic/Syntax.vue";
-
+import FoodMenu from "../components/food/FoodMenu.vue";
 
 //2.使用路由
 Vue.use(VueRouter);
@@ -17,13 +17,18 @@ const router = new VueRouter({
     routes :[
         {
             path: "/",
-            name:'home',
-            component: HelloWord,
+            name:'foodMenu',
+            component: FoodMenu,
         },
         {
             path: "/syntax",
             name:'Syntax',
             component: Syntax,
+        },
+        {
+            path: "/helloWorld",
+            name:'home',
+            component: HelloWord,
         },
         // {
         //   path: "/about",
