@@ -12,4 +12,40 @@ Vue框架是ViewModel层的实现者。
 
 Vue可以进行模块化编程：一个页面由几个模板组成。
 
+## 生命周期
+1. new Vue()
+
+2. 初始化 事件&生命周期
+
+3. beforeCreate：创建之前会进行一些钩子事件
+
+4. 初始化 注入&校验
+
+5. created()
+
+6. 绑定Model和View (是则下一步)
+
+是否指定 "el"(元素)             否——当调用vm.$mount(el)时下一步
+
+是否指定 "template"选项         否——将el外部的HTML作为template编译
+
+将template编译到render函数中(渲染)
+
+7. beforeAmount
+
+8. 创建vm.$el 并用其替换"el"
+
+9. mounted()
+
+10. 挂载完毕
+当data被修改时：
+    10.1 beforeUpdate
+    10.2 虚拟dom重新渲染，并应用更新
+    10.3 updated
+
+11. 当调用vm.$destory()时： beforeDestory
+
+12. 解除绑定，销毁子组件以及事件监听器
+
+13. 销毁完毕 :  destoryed
 
