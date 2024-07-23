@@ -5,7 +5,8 @@
     <h1> v-for 列表渲染</h1>
     <ul>
         <!-- 使用 v-for 的同时需要添加绑定，即 v-bind:key="xxx" key相当于一个唯一键，使用id是可以的  -->
-        <li v-for="item in nameItems" v-bind:key="item.id">{{ item.message }}</li>
+        <!-- <li v-for="item in nameItems" v-bind:key="item.id">{{ item.message }}</li> -->
+        <li v-for="(item,index) in nameItems" :key="index">{{ item.message }}- {{ index }}</li>
     </ul>
 
     <el-input v-model="inputName" placeholder="请输入姓名"></el-input>
@@ -24,10 +25,12 @@ export default {
     return{
         // 名字列表
         nameItems: [
-            {id: 1, message: "JYK"},
-            {id: 2, message: "DJY"},
+            // {id: 1, message: "JYK"},
+            // {id: 2, message: "DJY"},
+            {message: "JYK"},
+            {message: "DJY"},
         ],
-        idIndex:3, // id索引
+        //idIndex:3, // id索引
         inputName: '', // 
     }
   },
@@ -37,11 +40,11 @@ export default {
      */
     addItem() {
         let temp = {
-            id: this.idIndex,
+            //id: this.idIndex,
             message: this.inputName,
         }
         this.nameItems.push(temp);
-        this.idIndex = this.idIndex+1;
+        //this.idIndex = this.idIndex+1;
         this.inputName = '';
     },
 
@@ -50,7 +53,7 @@ export default {
      */
     deleteOneItem() {
         this.nameItems.pop();
-        this.idIndex = this.idIndex-1;
+        //this.idIndex = this.idIndex-1;
     }
   }
 }
