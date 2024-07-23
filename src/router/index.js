@@ -5,6 +5,7 @@ import HelloWord from "../components/HelloWorld.vue";
 import Syntax from "../components/basic/Syntax.vue";
 import If from "../components/basic/syntax/If.vue";
 import List from "../components/basic/syntax/List.vue";
+import On from "../components/basic/syntax/On.vue";
 import FoodMenu from "../components/food/FoodMenu.vue";
 
 //2.使用路由
@@ -36,6 +37,11 @@ const router = new VueRouter({
             path: "/syntax/list",
             name:'List',
             component: List,
+        },
+        {
+            path: "/syntax/on",
+            name:'On',
+            component: On,
         },
         {
             path: "/helloWorld",
