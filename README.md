@@ -64,3 +64,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## 运行后目录：
+
+### 语法
+http://localhost:8080/#/syntax/if
+http://localhost:8080/#/syntax/list
