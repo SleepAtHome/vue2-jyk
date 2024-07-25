@@ -7,6 +7,7 @@ import If from "../components/basic/syntax/If.vue";
 import List from "../components/basic/syntax/List.vue";
 import On from "../components/basic/syntax/On.vue";
 import FoodMenu from "../components/food/FoodMenu.vue";
+import AxiosReq from "../components/basic/AxiosReq.vue";
 
 //2.使用路由
 Vue.use(VueRouter);
@@ -42,6 +43,11 @@ const router = new VueRouter({
             path: "/syntax/on",
             name:'On',
             component: On,
+        },
+        {
+            path: "/axios",
+            name:'axios',
+            component: AxiosReq,
         },
         {
             path: "/helloWorld",
