@@ -3,9 +3,12 @@
 
     <!-- Axios -->
     <h1> Axios</h1>
-    <el-button @click="clickButton">调用本地接口</el-button>
+    <el-button @click="clickPostButton">Axios Post</el-button>
+    <el-button @click="clickGetButton">Axios Get</el-button>
     <br>
-    {{ myInfo }}
+    Post result:{{ myPostInfo }}
+    <br>
+    Get result:{{ myGetInfo }}
     
   </div>
 </template>
@@ -16,30 +19,43 @@ import axios from 'axios';
 export default {
   name: 'axios',
   data() {
-    return{
-        myInfo: ''    // 我的信息
+    return {
+        myPostInfo: '',     // Post请求结果
+        myGetInfo: '',       // Get请求结果
     }
   },
   methods: {
     /**
-     * 点击按钮1
+     * Post
      */
-    clickButton() {
+    clickPostButton() {
       let _this = this;
-
         axios.post('http://localhost:8080/jyk/request/post',{
           jyk: "jyk"
         })
         .then(response => {
-          _this.myInfo = response.data;
+          _this.myPostInfo = response.data;
         })
         .catch(error => {
           alert(error);
         })
     },
 
-    
-
+    /**
+     * Get
+     */
+    clickGetButton() {
+      let _this = this;
+        axios.get('http://localhost:8080/jyk/request/get?str=djy',{
+          jyk: "jyk"
+        })
+        .then(response => {
+          _this.myGetInfo = response.data;
+        })
+        .catch(error => {
+          alert(error);
+        })
+    },
   }
 }
 </script>
