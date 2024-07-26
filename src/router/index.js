@@ -2,12 +2,14 @@
 import Vue from "vue";
 import VueRouter from 'vue-router'
 import HelloWord from "../components/HelloWorld.vue";
-import Syntax from "../components/basic/Syntax.vue";
+import JYKIndex from "../components/basic/JYKIndex.vue";
 import If from "../components/basic/syntax/If.vue";
 import List from "../components/basic/syntax/List.vue";
 import On from "../components/basic/syntax/On.vue";
 import FoodMenu from "../components/food/FoodMenu.vue";
 import AxiosReq from "../components/basic/AxiosReq.vue";
+import VModel from "../components/basic/syntax/VModel.vue";
+
 
 //2.使用路由
 Vue.use(VueRouter);
@@ -21,13 +23,19 @@ const router = new VueRouter({
     routes :[
         {
             path: "/",
+            name:'JYKIndex',
+            component: JYKIndex,
+        },
+        
+        {
+            path: "/foodMenu",
             name:'foodMenu',
             component: FoodMenu,
         },
         {
-            path: "/syntax",
-            name:'Syntax',
-            component: Syntax,
+            path: "/jykIndex",
+            name:'JYKIndex',
+            component: JYKIndex,
         },
         {
             path: "/syntax/if",
@@ -48,6 +56,11 @@ const router = new VueRouter({
             path: "/axios",
             name:'axios',
             component: AxiosReq,
+        },
+        {
+            path: "/vmodel",
+            name:'VModel',
+            component: VModel,
         },
         {
             path: "/helloWorld",
