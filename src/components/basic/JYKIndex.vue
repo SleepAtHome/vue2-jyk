@@ -3,7 +3,7 @@
     <h1> 景元奎的主页 </h1>
 
     菜单页：
-    <el-button type="success" @click="jump2FoodMenu" round>Food Menu</el-button>
+    <el-button type="success" @click="jump2DishMenu" round>Dish Menu</el-button>
     <br>
 
     语法等：
@@ -28,8 +28,8 @@ export default {
     /**
      * 路由的第一种方式：this.$router.push
      */
-    jump2FoodMenu() {
-      this.$router.push({name: 'foodMenu'});
+    jump2DishMenu() {
+      this.$router.push({name: 'dishMenu'});
     },
 
     /**

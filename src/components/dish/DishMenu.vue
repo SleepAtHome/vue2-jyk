@@ -1,0 +1,230 @@
+<template>
+  <div>
+    <el-header><h1>家庭菜单</h1></el-header>
+      <el-container>
+        <el-aside width="200px">
+          <el-input
+            placeholder="请输入菜名"
+            v-model="dishnameInput"
+            clearable>
+          </el-input>
+          <el-button type="success" plain @click="refreshDishMenu(dishnameInput)">搜索</el-button>
+          <el-button type="primary" plain @click="openAddDishDialog">增加菜品</el-button>
+          
+          
+        </el-aside>
+
+        <el-container>
+          <el-main>
+            <el-table
+              :data="dishMenuList"
+              style="width: 100%">
+              <el-table-column
+                prop="dishName"
+                label="菜名"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="food"
+                label="食材"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="seasoning"
+                label="调料"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="chief"
+                label="厨师">
+              </el-table-column>
+              <el-table-column
+                prop="price"
+                label="价格(元)">
+              </el-table-column>
+              <el-table-column
+                prop="updateBy"
+                label="updateBy">
+              </el-table-column>
+              <el-table-column
+                prop="updateTime"
+                label="updateTime">
+              </el-table-column>
+            </el-table>
+          </el-main>
+          <el-footer>DJYsb</el-footer>
+        </el-container>
+      </el-container>
+      <el-dialog
+        title="增加菜品"
+        :visible.sync="addDishDialogVisible"
+        width="60%"
+        class="addDishDialogClass">
+        <el-form :model="addDishForm">
+          <el-form-item label="菜品名称" required>
+            <el-input v-model="addDishForm.dishName" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="食材" required>
+            <el-input v-model="addDishForm.food" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="调料" required>
+            <el-input v-model="addDishForm.seasoning" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="厨师" required>
+            <!-- 如果希望某个表单项或某个表单组件的尺寸不同于 Form 上的size属性，直接为这个表单项或表单组件设置自己的size即可 -->
+            <el-select v-model="addDishForm.chief" placeholder="请选择厨师" style="width: 100%;">
+              <el-option label="景元奎" value="Jing yk"></el-option>
+              <el-option label="戴君雅" value="Dai jy"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="价格" required>
+            <el-input v-model="addDishForm.price" autocomplete="off"></el-input>
+          </el-form-item>
+
+        </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDishDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDish">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <div class="footer"></div>
+  </div>
+</template>
+
+<script>
+
+import axios from 'axios';
+
+export default {
+  name: 'dishMenu',
+  mounted () {
+    this.getDishInfo();
+  }, 
+  data() {
+    return{
+      tableData: [{
+              dishName: '炒白菜',
+              rawMaterial: '白菜',
+              seasoning: '酱油/醋/糖/淀粉/干辣椒',
+              chief: '景元奎'
+          }],
+      dishMenuList: [], // 菜单List
+      dishnameInput: '', // 菜名搜索框
+
+      // 增加菜品对话框
+      addDishDialogVisible: false,  // 增加菜品对话框-默认关闭
+      // 增加菜品表单
+      addDishForm: {
+          dishName: '',
+          food: '',
+          seasoning: '',
+          chief: '',
+          price: 0,
+      },
+    }
+  },
+  methods: {
+    /**
+     * 进入页面时, 获取全部菜单
+     */
+    getDishInfo () {
+      let _this = this;
+      axios.post('http://localhost:8080/jyk-total/dish/search-all',{})
+      .then(response => {
+        if (response.data.code == 'S000') {
+          let respData = response.data.data;
+          _this.dishMenuList = respData;
+        }
+      })
+      .catch(error => {
+        alert(error);
+      })
+    },
+    /**
+     * 刷新菜单
+     * val : 传入菜名查询，传空为查询全部
+     */
+    refreshDishMenu (val) {
+      let _this = this;
+      if (!val) {
+        
+      }
+      let dishParam = {
+        dishName: val,
+      }
+      axios.post('http://localhost:8080/jyk-total/dish/search', dishParam)
+      .then(response => {
+        if (response.data.code == 'S000') {
+          let respData = response.data.data;
+          _this.dishMenuList = respData;
+        }
+      })
+      .catch(error => {
+        alert(error);
+      })
+    },
+    /**
+     * 打开增加菜品对话框
+     */
+    openAddDishDialog() {
+      this.addDishDialogVisible = true;
+    },
+    /**
+     * 增加菜品
+     */
+    addDish() {
+      // 清空原有数据
+      this.dishMenuList = [];
+
+      // 增加菜品接口
+      let _this = this;
+      let dishParam = {
+        dishName: this.addDishForm.dishName,
+        food: this.addDishForm.food,
+        seasoning: this.addDishForm.seasoning,
+        chief: this.addDishForm.chief,
+        price: this.addDishForm.price,
+      }
+      axios.post('http://localhost:8080/jyk-total/dish/add', dishParam)
+      .then(response => {
+        if (response.data.code == 'S000') {
+          alert('增加菜品成功');
+        }
+      })
+      .catch(error => {
+        alert(error);
+      })
+
+      // 刷新菜单列表
+      this.refreshDishMenu();
+      this.addDishDialogVisible = false;
+    },
+  }
+}
+</script>
+
+<style scoped>
+.el-header, .el-footer {
+  background-color: #B3C0D1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+.el-aside {
+  background-color: #D3DCE6;
+  color: #333;
+  text-align: center;
+  line-height: 200px;
+}
+
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+}
+</style>
