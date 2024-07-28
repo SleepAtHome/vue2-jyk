@@ -6,7 +6,7 @@ import JYKIndex from "../components/basic/JYKIndex.vue";
 import If from "../components/basic/syntax/If.vue";
 import List from "../components/basic/syntax/List.vue";
 import On from "../components/basic/syntax/On.vue";
-import FoodMenu from "../components/food/FoodMenu.vue";
+import DishMenu from "../components/dish/DishMenu.vue";
 import AxiosReq from "../components/basic/AxiosReq.vue";
 import VModel from "../components/basic/syntax/VModel.vue";
 
@@ -28,9 +28,9 @@ const router = new VueRouter({
         },
         
         {
-            path: "/foodMenu",
-            name:'foodMenu',
-            component: FoodMenu,
+            path: "/dishMenu",
+            name:'dishMenu',
+            component: DishMenu,
         },
         {
             path: "/jykIndex",
