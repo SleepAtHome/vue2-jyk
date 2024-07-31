@@ -65,10 +65,24 @@
             <el-input v-model="addDishForm.dishName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="食材" required>
-            <el-input v-model="addDishForm.food" autocomplete="off"></el-input>
+            <el-select v-model="addDishForm.foodList" multiple placeholder="请选择食材" style="width: 100%;">
+              <el-option
+                v-for="item in foodList"
+                :key="item.id"
+                :label="item.foodName"
+                :value="item.id">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="调料" required>
-            <el-input v-model="addDishForm.seasoning" autocomplete="off"></el-input>
+            <el-select v-model="addDishForm.seasoningList" multiple placeholder="请选择调料" style="width: 100%;">
+              <el-option
+                v-for="item in seasoningList"
+                :key="item.id"
+                :label="item.seasoningName"
+                :value="item.id">
+              </el-option>
+            </el-select>
           </el-form-item>
 
           <el-form-item label="厨师" required>
@@ -102,17 +116,13 @@ import axios from 'axios';
 export default {
   name: 'dishMenu',
   mounted () {
-    this.getDishInfo();
+    this.refreshInfo([1,2]);
   }, 
   data() {
     return{
-      tableData: [{
-              dishName: '炒白菜',
-              rawMaterial: '白菜',
-              seasoning: '酱油/醋/糖/淀粉/干辣椒',
-              chief: '景元奎'
-          }],
       dishMenuList: [], // 菜单List
+      foodList: [], // 食材List
+      seasoningList: [], // 调料List
       dishnameInput: '', // 菜名搜索框
 
       // 增加菜品对话框
@@ -120,29 +130,67 @@ export default {
       // 增加菜品表单
       addDishForm: {
           dishName: '',
-          food: '',
-          seasoning: '',
+          foodList: [],
+          seasoningList: [],
           chief: '',
           price: 0,
       },
+
+      choosedSeasoning: [], // 选中的调料
     }
   },
   methods: {
     /**
-     * 进入页面时, 获取全部菜单
+     * 刷新信息
      */
-    getDishInfo () {
+    refreshInfo (intArr) {
       let _this = this;
-      axios.post('http://localhost:8080/jyk-total/dish/search-all',{})
-      .then(response => {
-        if (response.data.code == 'S000') {
-          let respData = response.data.data;
-          _this.dishMenuList = respData;
+
+      for (let i=0; i<intArr.length; i++) {
+        // 刷新菜单
+        if (intArr[i] == 1) {
+          axios.post('http://localhost:8080/jyk-total/dish/search-all',{})
+            .then(response => {
+              if (response.data.code == 'S000') {
+                let respData = response.data.data;
+                _this.dishMenuList = respData;
+                this.$message({message: '成功获取菜单', type: 'success', showClose: true});}
+            })
+            .catch(error => {
+              this.$message({message: '获取菜单异常'+error, type: 'error', showClose: true});
+            })
         }
-      })
-      .catch(error => {
-        alert(error);
-      })
+
+        // 刷新食材
+        if (intArr[i] == 2) {
+          axios.post('http://localhost:8080/jyk-total/food/search-all',{})
+            .then(response => {
+              if (response.data.code == 'S000') {
+                let respData = response.data.data;
+                _this.foodList = respData;
+                this.$message({message: '成功获取食材', type: 'success', showClose: true});}
+            })
+            .catch(error => {
+              this.$message({message: '获取食材异常'+error, type: 'error', showClose: true});
+            })
+        }
+
+        // 刷新调料
+        if (intArr[i] == 3) {
+          axios.post('http://localhost:8080/jyk-total/seasoning/search-all',{})
+            .then(response => {
+              if (response.data.code == 'S000') {
+                let respData = response.data.data;
+                _this.seasoningList = respData;
+                this.$message({message: '成功获取调料', type: 'success', showClose: true});}
+            })
+            .catch(error => {
+              this.$message({message: '获取调料异常'+error, type: 'error', showClose: true});
+            })
+        }
+
+      }
+
     },
     /**
      * 刷新菜单
@@ -171,6 +219,11 @@ export default {
      * 打开增加菜品对话框
      */
     openAddDishDialog() {
+      
+      this.addDishForm = [];  // 清空原有表单数据
+      this.foodList = [], // 清空食材List
+      this.seasoningList = [], // 清空调料List
+      this.refreshInfo([2,3]);  // 刷新食材和调料信息
       this.addDishDialogVisible = true;
     },
     /**
@@ -184,8 +237,8 @@ export default {
       let _this = this;
       let dishParam = {
         dishName: this.addDishForm.dishName,
-        food: this.addDishForm.food,
-        seasoning: this.addDishForm.seasoning,
+        foodList: this.addDishForm.foodList,
+        seasoningList: this.addDishForm.seasoningList,
         chief: this.addDishForm.chief,
         price: this.addDishForm.price,
       }
