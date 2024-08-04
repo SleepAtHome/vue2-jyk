@@ -50,6 +50,27 @@
                 prop="updateTime"
                 label="updateTime">
               </el-table-column>
+              <el-table-column
+                label="上传图片"
+              >
+              <template slot-scope="scope">
+                <el-upload
+                  class="upload-demo"
+                  action="http://localhost:8080/jyk-total/dish/upload-file?"
+                  :data=scope.row
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :before-remove="beforeRemove"
+                  multiple
+                  :limit="3"
+                  :on-exceed="handleExceed"
+                  :file-list="uploadFileList">
+                  <el-button size="small" type="primary">上传菜品图片</el-button>
+                  <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                </el-upload>
+              </template>
+                
+              </el-table-column>
             </el-table>
           </el-main>
           <el-footer>DJYsb</el-footer>
@@ -96,7 +117,6 @@
           <el-form-item label="价格" required>
             <el-input v-model="addDishForm.price" autocomplete="off"></el-input>
           </el-form-item>
-
         </el-form>
 
       <span slot="footer" class="dialog-footer">
@@ -137,6 +157,7 @@ export default {
       },
 
       choosedSeasoning: [], // 选中的调料
+      uploadFileList: [],   // 上传文件列表
     }
   },
   methods: {
@@ -225,6 +246,21 @@ export default {
       this.seasoningList = [], // 清空调料List
       this.refreshInfo([2,3]);  // 刷新食材和调料信息
       this.addDishDialogVisible = true;
+    },
+    /**
+     * 
+     */
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
     /**
      * 增加菜品
