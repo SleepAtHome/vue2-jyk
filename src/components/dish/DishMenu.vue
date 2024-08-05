@@ -47,21 +47,24 @@
                 label="updateBy">
               </el-table-column>
               <el-table-column
-                prop="updateTime"
                 label="updateTime">
+                <template slot-scope="scope">
+                  <!-- 处理时间格式，formatTimestamp为全局处理时间格式方法 -->
+                  {{ scope.row.updateTime | formatTimestamp }}
+                </template>
               </el-table-column>
               <el-table-column
                 label="上传图片"
               >
+              <!-- TODO: 先做成上传一个图片的，后续做多图片的 -->
               <template slot-scope="scope">
                 <el-upload
                   class="upload-demo"
-                  action="http://localhost:8080/jyk-total/dish/upload-file?"
+                  action="http://localhost:8080/jyk-total/dish/upload-file"
                   :data=scope.row
                   :on-preview="handlePreview"
                   :on-remove="handleRemove"
                   :before-remove="beforeRemove"
-                  multiple
                   :limit="3"
                   :on-exceed="handleExceed"
                   :file-list="uploadFileList">
