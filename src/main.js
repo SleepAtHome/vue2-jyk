@@ -13,7 +13,32 @@ import axios from 'axios';
 
 Vue.use(ElementUI);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+// 格式化时间戳方法
+Vue.filter('formatTimestamp', function(value) {
+  if (value) {
+    let date = null;
+    // 处理ISO 8601字符串
+    if (typeof value === 'string') {
+      date = new Date(value);
+    }
+    // 处理时间戳
+    if (typeof value === 'number') {
+      date = new Date(value * 1000); 
+    }
+    const options = {
+      year:'numeric', 
+      month: 'short', 
+      day: 'numeric', 
+      hour: 'numeric', 
+      minute: 'numeric',
+      second: 'numeric'
+    };
+    return date.toLocaleDateString(undefined, options);
+  }
+  return '';
+})
 
 new Vue({
   //7.注册路由
