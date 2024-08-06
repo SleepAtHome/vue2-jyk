@@ -15,3 +15,7 @@ https://element.eleme.cn/#/zh-CN/component/layout
 
 npm使用方式：
 npm i element-ui -S
+
+### less
+
+npm install less less-loader --save-dev
