@@ -5,10 +5,18 @@
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
-            background-color="#545c64"
+            background-color="#2E236C"
             text-color="#fff"
             active-text-color="#ffd04b">
-            <el-submenu index="1">
+            <el-menu-item index="1" @click="jump2Page('JYKIndex')">
+                <i class="el-icon-ice-cream-round"></i>
+                <span slot="title">主页</span>
+            </el-menu-item>
+            <el-menu-item index="2" @click="jump2Page('dishMenu')">
+                <i class="el-icon-food"></i>
+                <span slot="title">家庭菜单</span>
+            </el-menu-item>
+            <el-submenu index="3">
                 <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>导航一</span>
@@ -26,15 +34,15 @@
                 <el-menu-item index="1-4-1">选项1</el-menu-item>
                 </el-submenu>
             </el-submenu>
-            <el-menu-item index="2">
+            <el-menu-item index="4">
                 <i class="el-icon-menu"></i>
                 <span slot="title">导航二</span>
             </el-menu-item>
-            <el-menu-item index="3" disabled>
+            <el-menu-item index="5" disabled>
                 <i class="el-icon-document"></i>
                 <span slot="title">导航三</span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="6">
                 <i class="el-icon-setting"></i>
                 <span slot="title">导航四</span>
             </el-menu-item>
@@ -50,6 +58,18 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+
+      /**
+       * 点击菜单时，发生跳转
+       */
+      jump2Page (val) {
+        //if(this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')){
+        //}
+        // 禁止跳转本页面
+        if (this.$route.name != val) {
+            this.$router.push({name: val});
+        }
       }
     }
   }
@@ -60,4 +80,6 @@
   width: 200px;
   min-height: 800px;
 }
+
+
 </style>
