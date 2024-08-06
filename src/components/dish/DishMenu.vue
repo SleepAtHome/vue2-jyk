@@ -1,93 +1,81 @@
 <template>
   <div>
-    <el-header><h1>家庭菜单</h1></el-header>
-      <el-container>
-        <el-aside width="200px">
-          <el-input
-            placeholder="请输入菜名"
-            v-model="dishnameInput"
-            clearable>
-          </el-input>
-          <el-button type="success" plain @click="refreshDishMenu(dishnameInput)">搜索</el-button>
-          <el-button type="primary" plain @click="openAddDishDialog">增加菜品</el-button>
-          
-          
-        </el-aside>
-
-        <el-container>
-          <el-main>
-            <el-table
-              :data="dishMenuList"
-              style="width: 100%">
-              <el-table-column
-                prop="dishName"
-                label="菜名"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                label="图片"
-                width="180">
-                <el-image 
-                  style="width: 100px; height: 100px"
-                  :src="url" 
-                  :preview-src-list="srcList">
-                </el-image>
-              </el-table-column>
-              <el-table-column
-                prop="food"
-                label="食材"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="seasoning"
-                label="调料"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="chief"
-                label="厨师">
-              </el-table-column>
-              <el-table-column
-                prop="price"
-                label="价格(元)">
-              </el-table-column>
-              <el-table-column
-                prop="updateBy"
-                label="updateBy">
-              </el-table-column>
-              <el-table-column
-                label="updateTime">
-                <template slot-scope="scope">
-                  <!-- 处理时间格式，formatTimestamp为全局处理时间格式方法 -->
-                  {{ scope.row.updateTime | formatTimestamp }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="上传图片"
-              >
-              <!-- TODO: 先做成上传一个图片的，后续做多图片的 -->
-              <template slot-scope="scope">
-                <el-upload
-                  class="upload-demo"
-                  action="http://localhost:8080/jyk-total/dish/upload-file"
-                  :data=scope.row
-                  :on-preview="handlePreview"
-                  :on-remove="handleRemove"
-                  :before-remove="beforeRemove"
-                  :limit="3"
-                  :on-exceed="handleExceed"
-                  :file-list="uploadFileList">
-                  <el-button size="small" type="primary">上传菜品图片</el-button>
-                  <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-                </el-upload>
-              </template>
-                
-              </el-table-column>
-            </el-table>
-          </el-main>
-          <el-footer>DJYsb</el-footer>
-        </el-container>
-      </el-container>
+    <h1>家庭菜单</h1>
+      <el-input
+        placeholder="请输入菜名"
+        v-model="dishnameInput"
+        clearable>
+      </el-input>
+      <el-button type="success" plain @click="refreshDishMenu(dishnameInput)">搜索</el-button>
+      <el-button type="primary" plain @click="openAddDishDialog">增加菜品</el-button>
+        <el-table
+          :data="dishMenuList"
+          style="width: 100%">
+          <el-table-column
+            prop="dishName"
+            label="菜名"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            label="图片"
+            width="180">
+            <el-image 
+              style="width: 100px; height: 100px"
+              :src="url" 
+              :preview-src-list="srcList">
+            </el-image>
+          </el-table-column>
+          <el-table-column
+            prop="food"
+            label="食材"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="seasoning"
+            label="调料"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="chief"
+            label="厨师">
+          </el-table-column>
+          <el-table-column
+            prop="price"
+            label="价格(元)">
+          </el-table-column>
+          <el-table-column
+            prop="updateBy"
+            label="updateBy">
+          </el-table-column>
+          <el-table-column
+            label="updateTime">
+            <template slot-scope="scope">
+              <!-- 处理时间格式，formatTimestamp为全局处理时间格式方法 -->
+              {{ scope.row.updateTime | formatTimestamp }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="上传图片"
+          >
+          <!-- TODO: 先做成上传一个图片的，后续做多图片的 -->
+          <template slot-scope="scope">
+            <el-upload
+              class="upload-demo"
+              action="http://localhost:8080/jyk-total/dish/upload-file"
+              :data=scope.row
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              :limit="3"
+              :on-exceed="handleExceed"
+              :file-list="uploadFileList">
+              <el-button size="small" type="primary">上传菜品图片</el-button>
+              <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            </el-upload>
+          </template>
+            
+          </el-table-column>
+        </el-table>      
       <el-dialog
         title="增加菜品"
         :visible.sync="addDishDialogVisible"
