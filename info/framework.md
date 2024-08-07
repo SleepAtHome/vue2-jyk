@@ -19,3 +19,10 @@ npm i element-ui -S
 ### less
 
 npm install less less-loader --save-dev
+
+### Vanta.js
+一个特效很好的参考网站
+https://www.vantajs.com/
+
+npm install vanta@0.5.24
+npm install three@0.121.0
