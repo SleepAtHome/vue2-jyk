@@ -5,7 +5,7 @@
 
     <!-- 网站色调：#17153B #2E236C #433D8B #C8ACD6-->
     <!-- 整体布局 -->
-    <el-container>
+    <el-container v-show="!(path ==='/')">
       <el-header class="jyk_header">
         <h1 class="jyk_header_h">欢迎来到景元奎的系统！</h1>
       </el-header>
@@ -20,6 +20,12 @@
       </el-container>
       <!-- <el-footer>DJYsb</el-footer> -->
     </el-container>
+
+    <!-- 专为登录页设置 -->
+    <div v-show="path ==='/'"  :style="{ height: screenHeight + 'px' }">
+      <router-view></router-view>
+    </div>
+    
   </div>
 </template>
 
@@ -30,7 +36,30 @@ export default {
   name: 'App',
   components: {
     LeftMenu
+  },
+  data(){
+      return{
+          path:'',
+          screenHeight: 0
+      }
+  },
+  mounted() {
+    // 加载当前路径
+    this.path = this.$route.path;
+    // console.log(this.$route.path)
+    this.setScreenHeight();
+  },
+  watch:{
+      $route(to,from){
+          this.path = to.path
+      }
+  },
+  methods: {
+    setScreenHeight() {
+      this.screenHeight = window.innerHeight;
+    }
   }
+  
 }
 </script>
 
@@ -61,5 +90,9 @@ export default {
 
 .jyk_el_main {
   padding: 0%;
+}
+
+.jyk_login {
+  height: 100%;
 }
 </style>

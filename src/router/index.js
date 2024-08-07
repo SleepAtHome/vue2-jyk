@@ -9,6 +9,7 @@ import On from "../components/basic/syntax/On.vue";
 import DishMenu from "../components/dish/DishMenu.vue";
 import AxiosReq from "../components/basic/AxiosReq.vue";
 import VModel from "../components/basic/syntax/VModel.vue";
+import Login from "../components/Login.vue"
 
 
 //2.使用路由
@@ -23,8 +24,8 @@ const router = new VueRouter({
     routes :[
         {
             path: "/",
-            name:'JYKIndex',
-            component: JYKIndex,
+            name:'Login',
+            component: Login,
         },
         
         {
