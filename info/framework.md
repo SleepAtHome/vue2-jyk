@@ -26,3 +26,7 @@ https://www.vantajs.com/
 
 npm install vanta@0.5.24
 npm install three@0.121.0
+
+
+### RSA加解密工具 jsencrypt
+npm install jsencrypt
