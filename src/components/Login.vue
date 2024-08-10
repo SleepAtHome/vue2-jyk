@@ -34,6 +34,9 @@
 <script>
 import * as THREE from 'three'
 import BIRDS from 'vanta/src/vanta.birds'
+import JSEncrypt from 'jsencrypt'; // 加解密工具
+import axios from 'axios';
+
 export default {
   mounted() {
     this.setScreenHeight();
@@ -81,10 +84,42 @@ export default {
      * 登录表单提交
      */
     loginSubmit () {
-      if (this.loginForm.account == 'jyk' && this.loginForm.password == 'jyk') {
-        this.$router.push('/jykIndex');
+      let _this = this;
+      let loginParam = {
+        account: this.loginForm.account,
+        password: this.encrypt(this.loginForm.password),
       }
-      console.log(this.loginForm);
+
+      axios.post('http://localhost:8080/jyk-total/user/login',loginParam)
+        .then(response => {
+          if (response.data.code == 'S000') {
+            _this.$message({message: '登录成功', type: 'success', showClose: true});
+
+            // 路由跳转
+            _this.$router.push('/jykIndex');
+          } else {
+            _this.$message({message: '登录失败', type: 'error', showClose: true});
+          }
+        })
+        .catch(error => {
+          _this.$message({message: '登录异常'+error, type: 'error', showClose: true});
+        })
+
+    },
+
+    // 加密
+    encrypt(txt) {
+            const publicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCRfxdKBzBl5BD/bHQ6VlRNx/FoM+CYB7y3Oeh2EO4H7xSNoLOKhedVEsueqCzIgtPu2r2lR/HQ9B8elOgbNAC7LliWRNE9jN3YubrIGKzPAuiN1Z54sOtFl6/+bQ6IkeVlzncQCurtkR5WVn88vPIFg5e1GhTIN7RF4ut5nnvf5wIDAQAB"
+
+        const encryptor = new JSEncrypt()
+        encryptor.setPublicKey(publicKey) // 设置公钥
+        return encryptor.encrypt(txt) // 对需要加密的数据进行加密
+    },
+    // 解密
+    decrypt(txt) {
+        // const encryptor = new JSEncrypt()
+        // encryptor.setPrivateKey(privateKey)
+        // return encryptor.decrypt(txt)
     }
   } 
 }
