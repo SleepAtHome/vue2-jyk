@@ -77,3 +77,18 @@ Cannot read properties of undefined (reading 'install')
 
 2.可以用第三方库进行操作，vuex-persis 或 vuex-persistedState。这两个库也是利用上述第一种原理。（这样方便简单）。用插件会少许多快乐。还是了解一下我手写的原理吧。
 
+## Vuex
+使用vuex：如果使用的是vue2版本，vuex4不适配，得卸载重新安装vuex3；
+卸载：npm uninstall vuex
+指定版本安装：npm install vuex@3
+
+
+Vuex 中的主要核心概念如下：State，Mutation，Action，Getter
+
+基础使用：
+      state:定义定义全局共享数据
+      getters:获取state中的数据
+      mutations:向state中设置新的数据/修改数据,是一个同步阻塞
+    高级：
+      actions:向state中设置新的数据/修改数据,是一个异步
+      modules:将store提取出来，作为单独文件

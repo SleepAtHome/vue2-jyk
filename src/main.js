@@ -11,6 +11,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 // 引入Axios
 import axios from 'axios';
 
+// 引入store（Vuex）
+import store from './store';
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
@@ -43,7 +46,8 @@ Vue.filter('formatTimestamp', function(value) {
 new Vue({
   //7.注册路由
   router,
-
+  // Vuex
+  store,
   // 引入ElementUI
   el: '#app',
 
