@@ -1,0 +1,110 @@
+<template>
+  <div>
+    <h1>每日清单</h1>
+    {{ this.$store.state.userInfo }}
+    <el-table
+      :data="checklistData"
+      style="width: 100%"
+      :row-class-name="tableRowClassName"
+    >
+      <el-table-column prop="date" label="日期" width="180"> </el-table-column>
+      <el-table-column prop="name" label="姓名" width="180"> </el-table-column>
+      <el-table-column prop="address" label="地址"> </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "checklist",
+  created() {},
+  mounted() {},
+  data() {
+    return {
+      checklistData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄",
+        },
+      ],
+    };
+  },
+  methods: {
+    /**
+     * 获取所有事项清单
+     */
+    getAllCheckListMapper() {
+      let getAllCheckListParam = {
+        userId: this.loginForm.account,
+      };
+
+      axios
+        .post("http://localhost:8080/jyk-total/check-list/search-condition", getAllCheckListParam)
+        .then((response) => {
+          if (response.data.code == "S000") {
+            _this.$message({
+              message: "登录成功",
+              type: "success",
+              showClose: true,
+            });
+
+            // 路由跳转
+            _this.$router.push("/jykIndex");
+          } else {
+            _this.$message({
+              message: "登录失败",
+              type: "error",
+              showClose: true,
+            });
+          }
+        })
+        .catch((error) => {
+          _this.$message({
+            message: "登录异常" + error,
+            type: "error",
+            showClose: true,
+          });
+        });
+    },
+    /**
+     *
+     */
+    tableRowClassName({ row, rowIndex }) {
+      if (rowIndex === 1) {
+        return "warning-row";
+      } else if (rowIndex === 3) {
+        return "success-row";
+      }
+      return "";
+    },
+  },
+};
+</script>
+
+<style>
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
+}
+</style>
