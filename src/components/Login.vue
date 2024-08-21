@@ -94,6 +94,12 @@ export default {
         .then(response => {
           if (response.data.code == 'S000') {
             _this.$message({message: '登录成功', type: 'success', showClose: true});
+            // 往Vuex中写入登录用户信息
+            let loginInfo = {
+              userName: response.data.data.userName,
+              userId: response.data.data.userId
+            }
+            _this.$store.commit('updateUserInfo', loginInfo);
 
             // 路由跳转
             _this.$router.push('/jykIndex');
