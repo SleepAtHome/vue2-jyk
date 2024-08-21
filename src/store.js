@@ -7,8 +7,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         userInfo: {
-            userId: 1,
-            userName: "景元奎"
+            userId: 888,
+            userName: "userName"
         }
     },
     mutations: {
