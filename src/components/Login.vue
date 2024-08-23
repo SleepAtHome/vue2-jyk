@@ -8,7 +8,7 @@
 
     <div class="jyk_login_card_div">
       <el-card class="jyk_login_card">
-        <el-form ref="loginForm" :model="loginForm" label-width="50px" >
+        <el-form ref="loginForm" :model="loginForm" label-width="50px" @keyup.native.enter="loginSubmit" >
           <el-form-item label="账号">
             <el-input v-model="loginForm.account"></el-input>
           </el-form-item>
