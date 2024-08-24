@@ -74,8 +74,10 @@ Cannot read properties of undefined (reading 'install')
 但是vuex不具有持久化，因为在内存中保存，一刷新就会丢失。接下来我们因该如何对vuex数据进行持久化存储？
 
 1.在登陆成功以后，数据在vuex中，通过mutations修改时，通过localstorage和sessionstorage手动的塞进去。（这样可以很灵活的使用）（推荐自己写）
-
 2.可以用第三方库进行操作，vuex-persis 或 vuex-persistedState。这两个库也是利用上述第一种原理。（这样方便简单）。用插件会少许多快乐。还是了解一下我手写的原理吧。
+
+localStorage除非主动删除，否则会永久存储在浏览器中。
+SessionStorage只在当前所在窗口关闭前有效，窗口关闭后其存储数据也就会被自动清除。
 
 ## Vuex
 使用vuex：如果使用的是vue2版本，vuex4不适配，得卸载重新安装vuex3；

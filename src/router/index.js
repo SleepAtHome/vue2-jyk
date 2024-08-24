@@ -7,10 +7,10 @@ import If from "../components/basic/syntax/If.vue";
 import List from "../components/basic/syntax/List.vue";
 import On from "../components/basic/syntax/On.vue";
 import DishMenu from "../components/dish/DishMenu.vue";
-import Checklist from "../components/checklist/Checklist.vue";
+import ChecklistPage from "../components/checklist/ChecklistPage.vue";
 import AxiosReq from "../components/basic/AxiosReq.vue";
 import VModel from "../components/basic/syntax/VModel.vue";
-import Login from "../components/Login.vue"
+import LoginPage from "../components/LoginPage.vue"
 
 
 //2.使用路由
@@ -25,8 +25,8 @@ const router = new VueRouter({
     routes :[
         {
             path: "/",
-            name:'Login',
-            component: Login,
+            name:'LoginPage',
+            component: LoginPage,
         },
         
         {
@@ -35,9 +35,9 @@ const router = new VueRouter({
             component: DishMenu,
         },
         {
-            path: "/checklist",
-            name:'checklist',
-            component: Checklist,
+            path: "/checklistPage",
+            name:'checklistPage',
+            component: ChecklistPage,
         },
         {
             path: "/jykIndex",

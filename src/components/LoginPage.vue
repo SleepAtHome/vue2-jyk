@@ -94,13 +94,12 @@ export default {
         .then(response => {
           if (response.data.code == 'S000') {
             _this.$message({message: '登录成功', type: 'success', showClose: true});
-            // 往Vuex中写入登录用户信息
+            // 往Vuex中写入登录用户信息(在Vuex的方法中我写了同步更新SessionStorage的方法)
             let loginInfo = {
               userName: response.data.data.userName,
               userId: response.data.data.userId
             }
             _this.$store.commit('updateUserInfo', loginInfo);
-
             // 路由跳转
             _this.$router.push('/jykIndex');
           } else {
@@ -122,11 +121,11 @@ export default {
         return encryptor.encrypt(txt) // 对需要加密的数据进行加密
     },
     // 解密
-    decrypt(txt) {
-        // const encryptor = new JSEncrypt()
-        // encryptor.setPrivateKey(privateKey)
-        // return encryptor.decrypt(txt)
-    }
+    // decrypt(txt) {
+    //     const encryptor = new JSEncrypt()
+    //     encryptor.setPrivateKey(privateKey)
+    //     return encryptor.decrypt(txt)
+    // }
   } 
 }
 </script>

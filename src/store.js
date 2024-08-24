@@ -12,8 +12,19 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
+        /**
+         * 更新用户信息，放入Vuex的同时要放入SessionStorage
+         * @param {*} state 
+         * @param {*} payload 
+         */
         updateUserInfo(state, payload) {
             state.userInfo = payload;
+            let onlineUserKey = 'onlineUserKey';
+
+            // 清除原有缓存数据
+            sessionStorage.removeItem(onlineUserKey);
+            // 放入新的数据
+            sessionStorage.setItem(onlineUserKey, state.userInfo);
         },
     },
     actions: {
