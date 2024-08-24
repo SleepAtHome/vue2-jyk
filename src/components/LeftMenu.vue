@@ -17,7 +17,7 @@
         <i class="el-icon-food"></i>
         <span slot="title">家庭菜单</span>
       </el-menu-item>
-      <el-menu-item index="3" @click="jump2Page('checklist')">
+      <el-menu-item index="3" @click="jump2Page('checklistPage')">
         <i class="el-icon-food"></i>
         <span slot="title">每日清单</span>
       </el-menu-item>

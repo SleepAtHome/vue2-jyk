@@ -3,7 +3,7 @@
     <h1>每日清单</h1>
     <!-- {{ this.$store.state.userInfo }} -->
     <!-- {{ allCheckList }} -->
-    {{ userTodayThing }}
+    <!-- {{ userTodayThing }} -->
     <el-table
       :data="checklistData"
       style="width: 100%"
@@ -40,7 +40,7 @@
 import axios from "axios";
 
 export default {
-  name: "checklist",
+  name: "checklistPage",
   created() {},
   mounted() {
     this.getAllCheckListMapper();
@@ -60,7 +60,8 @@ export default {
       let _this = this;
 
       let getAllCheckListParam = {
-        userId: this.$store.state.userInfo.userId,
+        userId: sessionStorage.getItem('onlineUserKey').userId,
+        // userId: this.$store.state.userInfo.userId,
       };
 
       // 获取当前用户事项列表
@@ -92,7 +93,8 @@ export default {
       // 获取当前用户当天事项清单
 
       let getUserTodatThingParam = {
-        userId: this.$store.state.userInfo.userId,
+        userId: sessionStorage.getItem('onlineUserKey').userId,
+        // userId: this.$store.state.userInfo.userId,
       };
       await axios
         .post(
@@ -146,10 +148,11 @@ export default {
         }
     },
     /**
-     *
+     * 
      */
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
+        console.log(row);
         return "warning-row";
       } else if (rowIndex === 3) {
         return "success-row";
