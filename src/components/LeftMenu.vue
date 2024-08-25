@@ -17,10 +17,28 @@
         <i class="el-icon-food"></i>
         <span slot="title">家庭菜单</span>
       </el-menu-item>
-      <el-menu-item index="3" @click="jump2Page('checklistPage')">
+
+
+
+      <!-- <el-menu-item index="3" @click="jump2Page('checklistPage')">
         <i class="el-icon-food"></i>
         <span slot="title">每日清单</span>
-      </el-menu-item>
+      </el-menu-item> -->
+
+      <el-submenu index="3">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>每日清单</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="3-1" @click="jump2Page('checklistPage')">当天需要完成</el-menu-item>
+          <el-menu-item index="3-2" @click="jump2Page('myMatterPage')">我的事项(天)</el-menu-item>
+          <el-menu-item index="3-3">我的事项(月)</el-menu-item>
+          <el-menu-item index="3-4">我的事项(年)</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+
+
       <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-location"></i>
