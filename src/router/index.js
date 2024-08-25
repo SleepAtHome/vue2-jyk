@@ -8,6 +8,7 @@ import List from "../components/basic/syntax/List.vue";
 import On from "../components/basic/syntax/On.vue";
 import DishMenu from "../components/dish/DishMenu.vue";
 import ChecklistPage from "../components/checklist/ChecklistPage.vue";
+import MyMatterPage from "../components/checklist/MyMatterPage.vue";
 import AxiosReq from "../components/basic/AxiosReq.vue";
 import VModel from "../components/basic/syntax/VModel.vue";
 import LoginPage from "../components/LoginPage.vue"
@@ -38,6 +39,11 @@ const router = new VueRouter({
             path: "/checklistPage",
             name:'checklistPage',
             component: ChecklistPage,
+        },
+        {
+            path: "/myMatterPage",
+            name:'myMatterPage',
+            component: MyMatterPage,
         },
         {
             path: "/jykIndex",
