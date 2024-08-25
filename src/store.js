@@ -7,8 +7,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         userInfo: {
-            userId: 888,
-            userName: "userName"
+            userId: null,
+            userName: ''
         }
     },
     mutations: {
@@ -20,11 +20,14 @@ const store = new Vuex.Store({
         updateUserInfo(state, payload) {
             state.userInfo = payload;
             let onlineUserKey = 'onlineUserKey';
-
             // 清除原有缓存数据
             sessionStorage.removeItem(onlineUserKey);
             // 放入新的数据
-            sessionStorage.setItem(onlineUserKey, state.userInfo);
+            let str = JSON.stringify(state.userInfo)//把对象转化为字符串（stringify）存放进sessionStorage
+            sessionStorage.setItem(onlineUserKey, str);
+
+            // 使用sessionStorage数据方法
+            // console.log(JSON.parse(sessionStorage.getItem('onlineUserKey')));
         },
     },
     actions: {

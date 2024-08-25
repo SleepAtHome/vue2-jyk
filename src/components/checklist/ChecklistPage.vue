@@ -60,7 +60,7 @@ export default {
       let _this = this;
 
       let getAllCheckListParam = {
-        userId: sessionStorage.getItem('onlineUserKey').userId,
+        userId: JSON.parse(sessionStorage.getItem('onlineUserKey')),
         // userId: this.$store.state.userInfo.userId,
       };
 
@@ -93,7 +93,7 @@ export default {
       // 获取当前用户当天事项清单
 
       let getUserTodatThingParam = {
-        userId: sessionStorage.getItem('onlineUserKey').userId,
+        userId: JSON.parse(sessionStorage.getItem('onlineUserKey')),
         // userId: this.$store.state.userInfo.userId,
       };
       await axios
