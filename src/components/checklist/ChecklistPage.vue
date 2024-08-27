@@ -38,6 +38,7 @@
 
 <script>
 import axios from "axios";
+import { sleep } from "../../js/utils";
 
 export default {
   name: "checklistPage",
@@ -60,23 +61,23 @@ export default {
       let _this = this;
 
       let getAllCheckListParam = {
-        userId: JSON.parse(sessionStorage.getItem('onlineUserKey')),
+        userId: JSON.parse(sessionStorage.getItem('onlineUserKey')).userId,
         // userId: this.$store.state.userInfo.userId,
       };
 
       // 获取当前用户事项列表
-      await axios
+      axios
         .post(
           "http://localhost:8080/jyk-total/check-list/search-condition",
           getAllCheckListParam
         )
         .then((response) => {
           if (response.data.code == "S000") {
-            
             _this.allCheckList = response.data.data;
+
           } else {
             _this.$message({
-              message: "登录失败",
+              message: "获取当前用户事项 失败"+ response.data,
               type: "error",
               showClose: true,
             });
@@ -84,19 +85,20 @@ export default {
         })
         .catch((error) => {
           _this.$message({
-            message: "登录异常" + error,
+            message: "获取当前用户事项 异常" + error,
             type: "error",
             showClose: true,
           });
         });
 
-      // 获取当前用户当天事项清单
+      await sleep(500);
 
+      // 获取当前用户当天事项清单
       let getUserTodatThingParam = {
-        userId: JSON.parse(sessionStorage.getItem('onlineUserKey')),
+        userId: JSON.parse(sessionStorage.getItem('onlineUserKey')).userId,
         // userId: this.$store.state.userInfo.userId,
       };
-      await axios
+      axios
         .post(
           "http://localhost:8080/jyk-total/check-list-record/search-today-condition",
           getUserTodatThingParam
@@ -107,7 +109,7 @@ export default {
             _this.userTodayThing = response.data.data;
           } else {
             _this.$message({
-              message: "登录失败",
+              message: "获取当前用户当天事项清单 失败",
               type: "error",
               showClose: true,
             });
@@ -115,11 +117,13 @@ export default {
         })
         .catch((error) => {
           _this.$message({
-            message: "登录异常" + error,
+            message: "获取当前用户当天事项清单 异常" + error,
             type: "error",
             showClose: true,
           });
         });
+
+        await sleep(500);
 
         // 聚合结果
         for (let i=0;i<this.userTodayThing.length;i++) {
@@ -151,12 +155,13 @@ export default {
      * 
      */
     tableRowClassName({ row, rowIndex }) {
-      if (rowIndex === 1) {
-        console.log(row);
-        return "warning-row";
-      } else if (rowIndex === 3) {
+      console.log(rowIndex)
+      if (row.finished == '已完成') {
         return "success-row";
+      } else if (row.finished == '未完成') {
+        return "warning-row";
       }
+      
       return "";
     },
 
