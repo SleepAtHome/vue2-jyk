@@ -4,6 +4,7 @@
     <!-- {{ this.$store.state.userInfo }} -->
     <!-- {{ allCheckList }} -->
     <!-- {{ userTodayThing }} -->
+    <el-button type="primary" @click="refreshCheckList">手动刷新事项列表</el-button>
     <el-table
       :data="checklistData"
       style="width: 100%"
@@ -150,6 +151,14 @@ export default {
 
           this.checklistData.push(data); 
         }
+    },
+
+    /**
+     * 手动刷新事项列表
+     */
+    refreshCheckList() {
+      this.checklistData = [];
+      this.getAllCheckListMapper();
     },
     /**
      * 
