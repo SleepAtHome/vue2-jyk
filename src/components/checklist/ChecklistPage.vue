@@ -157,8 +157,34 @@ export default {
      * 手动刷新事项列表
      */
     refreshCheckList() {
-      this.checklistData = [];
-      this.getAllCheckListMapper();
+      let _this = this;
+      let refreshParam = {
+            userId: JSON.parse(sessionStorage.getItem('onlineUserKey')).userId,
+      };
+
+      axios.post("http://localhost:8080/jyk-total/check-list-record/manually-generated",refreshParam)
+            .then((response) => {
+              if (response.data.code == "S000") {
+                _this.$message({
+                  message: "手动刷新创建任务 成功",
+                  type: "success",
+                  showClose: true,
+                });
+              } else {
+                _this.$message({
+                  message: "手动刷新创建任务 失败",
+                  type: "error",
+                  showClose: true,
+                });
+              }
+            })
+            .catch((error) => {
+              _this.$message({
+                message: "手动刷新创建任务 异常" + error,
+                type: "error",
+                showClose: true,
+              });
+            });
     },
     /**
      * 
