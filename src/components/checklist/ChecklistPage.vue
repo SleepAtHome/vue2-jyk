@@ -185,6 +185,10 @@ export default {
                 showClose: true,
               });
             });
+
+      // 刷新表格
+      this.checklistData = [];
+      this.getAllCheckListMapper();
     },
     /**
      * 
