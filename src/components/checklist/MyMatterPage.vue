@@ -42,7 +42,7 @@
       <el-table-column prop="frequency" label="频率"> </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="danger" @click="finishOneThing(scope.row.id)">删除</el-button>
+          <el-button size="small" type="danger" @click="deleteMatter(scope.row.id)">删除</el-button>
         </template>
         
       </el-table-column>
@@ -147,6 +147,10 @@ export default {
                 type: "success",
                 showClose: true,
             });
+
+            this.myDayChecklist = [];
+            this.getMyDayChecklistInfo();
+
             } else {
             _this.$message({
                 message: "增加事项失败",
@@ -170,51 +174,13 @@ export default {
     /**
      * 完成当前事项
      */
-    finishOneThing(recordId) {
-      let _this = this;
-      for (let i=0;i<this.checklistData.length;i++) {
-        // 如果为当前行，调用结束接口
-        
-        if (this.checklistData[i].recordId == recordId) {
-          
-          let finishParam = {
-            id: this.checklistData[i].recordId,
-            finished: 1,
-            // memo
-            updateBy: this.checklistData[i].userId,
-          };
-          axios
-            .post(
-              "http://localhost:8080/jyk-total/check-list-record/finish",
-              finishParam
-            )
-            .then((response) => {
-              if (response.data.code == "S000") {
-                _this.$message({
-                  message: "完成成功",
-                  type: "success",
-                  showClose: true,
-                });
-              } else {
-                _this.$message({
-                  message: "登录失败",
-                  type: "error",
-                  showClose: true,
-                });
-              }
-            })
-            .catch((error) => {
-              _this.$message({
-                message: "登录异常" + error,
-                type: "error",
-                showClose: true,
-              });
-            });
-        }
+    deleteMatter(recordId) {
+      for (let i=0;i<this.myDayChecklist.length;i++) {
+        // 调用删除接口
+        console.log(recordId);
       }
 
       // 刷新表格
-      this.checklistData = [];
       this.getMyDayChecklistInfo();
     }
   },
